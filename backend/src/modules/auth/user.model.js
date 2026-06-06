@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema(
       },
     },
 
-
     fullName: {
       firstName: {
         type: String,
@@ -64,6 +63,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["ADMIN", "PROCUREMENT", "MANAGER", "VENDOR"],
+      default: "PROCUREMENT",
     },
 
     isActive: Boolean,
@@ -75,6 +75,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.index({
   role: 1,
+  email: 1,
 });
 
 /* ─────────────────────────────────────────────

@@ -1,6 +1,6 @@
 import multer from "multer";
 
-import ApiError from "../utils/ApiError.js";
+import apiError from "../utils/apiError.js";
 
 const storage = multer.memoryStorage();
 
@@ -15,7 +15,7 @@ const fileFilter = (req, file, cb) => {
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new ApiError(400, "Invalid file type"));
+    cb(new apiError(400, "Invalid file type"));
   }
 };
 

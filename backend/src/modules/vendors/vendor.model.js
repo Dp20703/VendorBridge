@@ -1,27 +1,57 @@
 import mongoose from "mongoose";
 
-const vendorSchema = new mongoose.Schema({
-  companyName: String,
+const vendorSchema = new mongoose.Schema(
+  {
+    companyName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-  gstNumber: String,
+    gstNumber: {
+      type: String,
+      trim: true,
+    },
 
-  email: String,
+    country: {
+      type: String,
+      trim: true,
+    },
 
-  phone: String,
+    category: {
+      type: String,
+      trim: true,
+    },
 
-  category: String,
+    address: {
+      type: String,
+      trim: true,
+    },
 
-  address: String,
+    status: {
+      type: String,
+      enum: ["PENDING", "ACTIVE", "REJECTED", "INACTIVE"],
+      default: "PENDING",
+    },
 
-  status: {
-    type: String,
-    enum: ["ACTIVE", "INACTIVE"],
+    rating: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+    },
+
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true,
+    },
   },
-
-  rating: Number,
-
-  createdBy: ObjectId,
-});
+  {
+    timestamps: true,
+  },
+);
 
 const Vendor = mongoose.model("Vendor", vendorSchema);
 

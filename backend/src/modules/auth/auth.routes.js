@@ -1,6 +1,4 @@
 import express from "express";
-
-import { verifyJWT } from "../middlewares/auth.middleware.js";
 import validate from "../middlewares/validate.middleware.js";
 
 import {
@@ -10,7 +8,7 @@ import {
   getCurrentUser,
   forgotPassword,
 } from "./auth.controller.js";
-
+import { verifyJWT } from "../../middlewares/auth.middleware.js";
 import {
   registerValidation,
   loginValidation,

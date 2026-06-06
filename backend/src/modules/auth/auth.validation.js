@@ -23,17 +23,6 @@ export const registerValidation = [
     .matches(/^[A-Za-z]+$/)
     .withMessage("Only alphabets allowed"),
 
-  /* USERNAME */
-
-  body("userName")
-    .trim()
-    .notEmpty()
-    .withMessage("Username is required")
-    .isLength({ min: 3 })
-    .withMessage("Username must be at least 3 characters")
-    .matches(/^[a-zA-Z0-9_]+$/)
-    .withMessage("Only letters, numbers and underscore allowed"),
-
   /* EMAIL */
 
   body("email")
@@ -99,17 +88,6 @@ export const loginValidation = [
 ];
 
 /* ─────────────────────────────────────────────
-   GOOGLE AUTH VALIDATION
-───────────────────────────────────────────── */
-
-export const googleAuthValidation = [
-  body("credential")
-    .trim()
-    .notEmpty()
-    .withMessage("Google credential is required"),
-];
-
-/* ─────────────────────────────────────────────
    FORGOT PASSWORD VALIDATION
 ───────────────────────────────────────────── */
 
@@ -122,4 +100,3 @@ export const forgotPasswordValidation = [
     .withMessage("Invalid email format")
     .normalizeEmail(),
 ];
-
