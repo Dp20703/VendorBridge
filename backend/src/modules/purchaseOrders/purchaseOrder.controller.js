@@ -40,7 +40,7 @@ export const createPurchaseOrder = asyncHandler(async (req, res) => {
     vendorId: quotation.vendorId,
     amount: quotation.amount,
     poNumber,
-    createdBy: req.user._id,
+    userId: req.user._id,
   });
 
   return res

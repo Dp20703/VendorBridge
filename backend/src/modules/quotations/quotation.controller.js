@@ -20,7 +20,7 @@ import Quotation from "./quotation.model.js";
  */
 export const createQuotation = asyncHandler(async (req, res) => {
   const vendor = await Vendor.findOne({
-    createdBy: req.user._id,
+    userId: req.user._id,
   });
 
   if (!vendor) {
@@ -58,7 +58,7 @@ export const updateQuotation = asyncHandler(async (req, res) => {
   }
 
   const vendor = await Vendor.findOne({
-    createdBy: req.user._id,
+    userId: req.user._id,
   });
 
   if (quotation.vendorId._id.toString() !== vendor._id.toString()) {

@@ -13,7 +13,7 @@ import {
 export const createRfq = asyncHandler(async (req, res) => {
   const rfq = await createRfqService({
     ...req.body,
-    createdBy: req.user._id,
+    userId: req.user._id,
   });
 
   return res

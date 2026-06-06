@@ -18,7 +18,7 @@ import {
 export const createVendor = asyncHandler(async (req, res) => {
   const vendor = await createVendorService({
     ...req.body,
-    createdBy: req.user._id,
+    userId: req.user._id,
   });
 
   return res

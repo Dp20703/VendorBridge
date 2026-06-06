@@ -154,7 +154,7 @@ export const emailInvoice = asyncHandler(async (req, res) => {
     throw new apiError(404, "Vendor not found");
   }
 
-  const vendorEmail = vendor.createdBy.email;
+  const vendorEmail = vendor.userId.email;
 
   await sendInvoiceEmail({
     to: vendorEmail,

@@ -41,7 +41,7 @@ const vendorSchema = new mongoose.Schema(
       max: 5,
     },
 
-    createdBy: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
