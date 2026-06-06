@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
@@ -7,7 +7,7 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  
+
   /* Procurement Theme - Custom Dark Luxury colors integrated into semantic utilities */
   --color-primary-50: #f0fdf4;
   --color-primary-100: #dcfce7;
@@ -20,7 +20,9 @@
 
 /* Base styling customizations */
 body {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -43,7 +45,8 @@ body {
 
 @media print {
   /* Hide sidebar, header, buttons and extraneous containers */
-  body, html {
+  body,
+  html {
     background: #ffffff !important;
     color: #000000 !important;
     font-size: 11px !important;
@@ -89,7 +92,8 @@ body {
     page-break-inside: avoid;
   }
 
-  td, th {
+  td,
+  th {
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
     white-space: normal !important;
@@ -108,4 +112,3 @@ body {
     margin: 15mm 15mm 15mm 15mm;
   }
 }
-

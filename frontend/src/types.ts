@@ -4,10 +4,10 @@
  */
 
 export enum UserRole {
-  ADMIN = 'ADMIN',
-  PROCUREMENT = 'PROCUREMENT',
-  MANAGER = 'MANAGER',
-  VENDOR = 'VENDOR',
+  ADMIN = "ADMIN",
+  PROCUREMENT = "PROCUREMENT",
+  MANAGER = "MANAGER",
+  VENDOR = "VENDOR",
 }
 
 export interface UserProfile {
@@ -32,7 +32,7 @@ export interface Vendor {
   address: string;
   category: string;
   rating: number; // 1 to 5
-  status: 'Active' | 'Pending' | 'Blacklisted';
+  status: "Active" | "Pending" | "Blacklisted";
   completedOrdersCount: number;
   averageDeliveryDays: number;
 }
@@ -54,7 +54,7 @@ export interface RFQ {
   deadline: string;
   assignedVendors: string[]; // List of vendor ids
   items: RFQItem[];
-  status: 'Draft' | 'Open' | 'Closed' | 'Approved' | 'Rejected'; // 'Open' means published and visible to assigned vendors
+  status: "Draft" | "Open" | "Closed" | "Approved" | "Rejected"; // 'Open' means published and visible to assigned vendors
   createdAt: string;
   attachments?: string[];
 }
@@ -77,7 +77,7 @@ export interface Quotation {
   items: QuotationItem[];
   deliveryTimeline: number; // in days
   notes: string;
-  status: 'Draft' | 'Submitted' | 'Revised' | 'Accepted' | 'Rejected';
+  status: "Draft" | "Submitted" | "Revised" | "Accepted" | "Rejected";
   submittedAt?: string;
   subtotal: number;
   tax: number; // 18% GST standard e.g.
@@ -93,11 +93,11 @@ export interface ApprovalTimelineEvent {
 
 export interface ApprovalWorkflow {
   id: string;
-  targetType: 'RFQ' | 'QUOTATION';
+  targetType: "RFQ" | "QUOTATION";
   targetId: string;
   title: string;
   requesterName: string;
-  status: 'Pending' | 'Under Review' | 'Approved' | 'Rejected';
+  status: "Pending" | "Under Review" | "Approved" | "Rejected";
   managerRemarks?: string;
   updatedBy?: string;
   updatedAt: string;
@@ -122,7 +122,7 @@ export interface PurchaseOrder {
   subTotal: number;
   tax: number;
   totalAmount: number;
-  status: 'Pending' | 'Approved' | 'Delivered';
+  status: "Pending" | "Approved" | "Delivered";
   createdAt: string;
 }
 
@@ -145,14 +145,14 @@ export interface Invoice {
   subtotal: number;
   tax: number; // standard 18% GST e.g.
   grandTotal: number;
-  status: 'Draft' | 'Paid' | 'Unpaid' | 'Overdue';
+  status: "Draft" | "Paid" | "Unpaid" | "Overdue";
   createdAt: string;
   dueDate: string;
 }
 
 export interface AuditActivity {
   id: string;
-  type: 'RFQ' | 'QUOTATION' | 'APPROVAL' | 'PO' | 'INVOICE' | 'VENDOR' | 'AUTH';
+  type: "RFQ" | "QUOTATION" | "APPROVAL" | "PO" | "INVOICE" | "VENDOR" | "AUTH";
   description: string;
   user: string;
   role: UserRole;
@@ -163,7 +163,7 @@ export interface SystemNotification {
   id: string;
   title: string;
   message: string;
-  type: 'info' | 'success' | 'warning' | 'error';
+  type: "info" | "success" | "warning" | "error";
   read: boolean;
   createdAt: string;
 }
