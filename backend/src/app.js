@@ -9,7 +9,7 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 
-import authRoutes from "./modules/auth/auth.routes.js"
+import routes from "./routes/index.js";
 
 import errorHandler from "./middlewares/error.middleware.js";
 import { notFoundMiddleware } from "./middlewares/notFound.middleware.js";
@@ -57,7 +57,7 @@ app.get("/", (req, res) => {
 });
 
 /* ROUTES */
-app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1", routes);
 
 // /* ERROR */
 app.use(errorHandler);

@@ -18,13 +18,12 @@ export const verifyJWT = async (req, res, next) => {
 
     const user = await User.findById(decoded.id).select("-password");
 
-    if (!user) {
+    if (!user || !user.isActive) {
       return res.status(401).json({
         success: false,
-        message: "User not found",
+        message: "Account is inactive",
       });
     }
-
     req.user = user;
 
     next();
