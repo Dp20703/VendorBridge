@@ -10,8 +10,10 @@ import {
   getAllQuotations,
   getQuotationsByRfq,
 } from "./quotation.controller.js";
-
-import { createQuotation, updateQuotation } from "./quotation.controller.js";
+import {
+  createQuotationValidation,
+  updateQuotationValidation,
+} from "./quotation.validation.js";
 
 const router = express.Router();
 
@@ -52,7 +54,7 @@ router.get(
  * Procurement - Get Quotations For RFQ
  */
 router.get(
-  "/rfq/:rfqId",
+  "/rfqs/:rfqId",
   verifyJWT,
   authorizeRoles("ADMIN", "PROCUREMENT", "MANAGER"),
   getQuotationsByRfq,

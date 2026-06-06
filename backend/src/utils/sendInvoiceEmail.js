@@ -1,4 +1,4 @@
-import transporter from "../config/mail.config.js";
+import transporter from "../config/mail.js";
 
 const sendInvoiceEmail = async ({ to, invoiceNumber, totalAmount, pdfUrl }) => {
   await transporter.sendMail({

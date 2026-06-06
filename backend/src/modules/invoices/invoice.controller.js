@@ -1,7 +1,7 @@
 import Invoice from "./invoice.model.js";
-import PurchaseOrder from "../purchase-order/purchaseOrder.model.js";
+import PurchaseOrder from "../purchaseOrders/purchaseOrder.model.js";
 import sendInvoiceEmail from "../../utils/sendInvoiceEmail.js";
-import createNotification from "../notifications/notification.utils.js";
+import { createNotification } from "../notifications/notification.utils.js";
 
 import asyncHandler from "../../utils/asyncHandler.js";
 import apiError from "../../utils/apiError.js";
@@ -54,7 +54,7 @@ export const createInvoice = asyncHandler(async (req, res) => {
     status: "GENERATED",
   });
   await createNotification({
-    userId: req.user.id,
+    userId: req.user._id,
     title: "Invoice Generated",
     message: `Invoice ${invoice.invoiceNumber} has been generated`,
     type: "INVOICE",

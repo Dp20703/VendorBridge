@@ -1,7 +1,7 @@
-import Quotation from "../quotation/quotation.model.js";
-import PurchaseOrder from "../purchase-order/purchaseOrder.model.js";
-import Vendor from "../vendor/vendor.model.js";
-import Rfq from "../rfq/rfq.model.js";
+import Quotation from "../quotations/quotation.model.js";
+import PurchaseOrder from "../purchaseOrders/purchaseOrder.model.js";
+import Vendor from "../vendors/vendor.model.js";
+import Rfq from "../rfqs/rfq.model.js";
 
 /**
  * ------------------------------------------------

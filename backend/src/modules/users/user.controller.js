@@ -9,6 +9,9 @@ import {
   updateRoleService,
   updateStatusService,
 } from "./user.service.js";
+import deleteFromCloudinary from "../../helpers/cloudinary/deleteFromCloudinary.js";
+import uploadToCloudinary from "../../helpers/cloudinary/uploadToCloudinary.js";
+import User from "./user.model.js";
 
 /**
  * Get All Users
@@ -43,6 +46,66 @@ export const getProfile = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new apiResponse(200, req.user, "Profile fetched successfully"));
+});
+
+/**
+ * Update Profile Image
+ */
+
+export const updateProfileImage = asyncHandler(async (req, res) => {
+  if (!req.file) {
+    throw new apiError(400, "Profile image is required");
+  }
+
+  const user = await User.findById(req.user._id);
+
+  if (user.profileImage?.publicId) {
+    await deleteFromCloudinary(user.profileImage.publicId);
+  }
+
+  const uploaded = await uploadToCloudinary(req.file, "VendorBridge/users");
+
+  user.profileImage = {
+    url: uploaded.url,
+    publicId: uploaded.publicId,
+    uploadedAt: new Date(),
+  };
+
+  await user.save();
+
+  return res
+    .status(200)
+    .json(
+      new apiResponse(
+        200,
+        user.profileImage,
+        "Profile image updated successfully",
+      ),
+    );
+});
+
+/**
+ * Delete Profile Image
+ */
+
+export const deleteProfileImage = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user.profileImage?.publicId) {
+    await deleteFromCloudinary(user.profileImage.publicId);
+  }
+
+  user.profileImage = {
+    url: "",
+    publicId: "",
+    uploadedAt: null,
+  };
+
+  await user.save();
+
+  return res
+    .status(200)
+    .json(new apiResponse(200, null, "Profile image removed successfully"));
 });
 
 /**

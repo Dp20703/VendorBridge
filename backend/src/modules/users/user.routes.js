@@ -4,6 +4,7 @@ import { verifyJWT } from "../../middlewares/auth.middleware.js";
 import { authorizeRoles } from "../../middlewares/role.middleware.js";
 
 import validate from "../../middlewares/validate.middleware.js";
+import { upload } from "../../config/multer.config.js";
 
 import {
   updateProfileValidation,
@@ -18,6 +19,8 @@ import {
   updateProfile,
   updateUserRole,
   updateUserStatus,
+  updateProfileImage,
+  deleteProfileImage,
 } from "./user.controller.js";
 
 const router = express.Router();
@@ -26,6 +29,16 @@ const router = express.Router();
  * Get Current Profile
  */
 router.get("/profile", verifyJWT, getProfile);
+
+router.patch(
+  "/profile-image",
+  verifyJWT,
+  upload.single("image"),
+  updateProfileImage,
+);
+
+// DELETE /api/users/profile-image
+router.delete("/profile-image", verifyJWT, deleteProfileImage);
 
 /**
  * Update Current Profile

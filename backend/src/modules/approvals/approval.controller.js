@@ -1,5 +1,5 @@
 import Approval from "./approval.model.js";
-import Quotation from "../quotation/quotation.model.js";
+import Quotation from "../quotations/quotation.model.js";
 
 import asyncHandler from "../../utils/asyncHandler.js";
 import apiError from "../../utils/apiError.js";

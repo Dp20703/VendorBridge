@@ -1,4 +1,4 @@
-import Quotation from "../quotation/quotation.model.js";
+import Quotation from "../quotations/quotation.model.js";
 import apiError from "../../utils/apiError.js";
 
 export const getComparisonService = async (rfqId) => {

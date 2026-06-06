@@ -1,4 +1,4 @@
-import Vendor from "../vendor/vendor.model.js";
+import Vendor from "../vendors/vendor.model.js";
 
 import asyncHandler from "../../utils/asyncHandler.js";
 import apiError from "../../utils/apiError.js";
@@ -97,18 +97,12 @@ export const getAllQuotations = asyncHandler(async (req, res) => {
  * Get Quotations For RFQ
  * Procurement/Admin/Manager
  */
-export const getQuotationsByRfq =
-  asyncHandler(async (req, res) => {
-    const quotations =
-      await getQuotationsByRfqService(
-        req.params.rfqId
-      );
+export const getQuotationsByRfq = asyncHandler(async (req, res) => {
+  const quotations = await getQuotationsByRfqService(req.params.rfqId);
 
-    return res.status(200).json(
-      new apiResponse(
-        200,
-        quotations,
-        "RFQ quotations fetched successfully"
-      )
+  return res
+    .status(200)
+    .json(
+      new apiResponse(200, quotations, "RFQ quotations fetched successfully"),
     );
-  });
+});
