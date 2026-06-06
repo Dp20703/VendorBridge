@@ -1,4 +1,3 @@
-frontend/*
 *.json
 .env
 .env.local
