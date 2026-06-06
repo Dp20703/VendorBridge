@@ -48,11 +48,8 @@ export const getRecentActivityService = async () => {
   const [recentRfqs, recentQuotations, recentPurchaseOrders, recentInvoices] =
     await Promise.all([
       Rfq.find().sort({ createdAt: -1 }).limit(5),
-
       Quotation.find().sort({ createdAt: -1 }).limit(5),
-
       PurchaseOrder.find().sort({ createdAt: -1 }).limit(5),
-
       Invoice.find().sort({ createdAt: -1 }).limit(5),
     ]);
 

@@ -1,14 +1,54 @@
 import mongoose from "mongoose";
 
-const activityLogSchema = new mongoose.Schema({
-  userId: ObjectId,
+const activityLogSchema = new mongoose.Schema(
+  {
+    /**
+     * User Who Performed Action
+     */
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
-  module: String,
+    /**
+     * Module Name
+     * Example:
+     * RFQ
+     * QUOTATION
+     * APPROVAL
+     */
+    module: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-  action: String,
+    /**
+     * Action Performed
+     * Example:
+     * CREATE_RFQ
+     * SUBMIT_QUOTATION
+     * APPROVE_QUOTATION
+     */
+    action: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-  metadata: Object,
-});
+    /**
+     * Additional Data
+     */
+    metadata: {
+      type: Object,
+      default: {},
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 const ActivityLog = mongoose.model("ActivityLog", activityLogSchema);
 

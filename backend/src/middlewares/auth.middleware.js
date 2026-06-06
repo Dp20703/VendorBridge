@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../modules/auth/user.model";
+import User from "../modules/users/user.model";
 
 export const verifyJWT = async (req, res, next) => {
   try {

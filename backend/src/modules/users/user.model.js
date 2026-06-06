@@ -66,7 +66,10 @@ const userSchema = new mongoose.Schema(
       default: "PROCUREMENT",
     },
 
-    isActive: Boolean,
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
