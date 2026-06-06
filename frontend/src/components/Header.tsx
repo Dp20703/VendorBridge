@@ -1,12 +1,18 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React, { useState } from 'react';
-import { useApp } from '../context/AppContext';
-import { Sun, Moon, Bell, Search, LogOut, Shield, ChevronRight, User, CheckCircle2, AlertCircle } from 'lucide-react';
-import { UserRole } from '../types';
+import React, { useState } from "react";
+import { useApp } from "../context/AppContext";
+import {
+  Sun,
+  Moon,
+  Bell,
+  Search,
+  LogOut,
+  Shield,
+  ChevronRight,
+  User,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
+import { UserRole } from "../types";
 
 interface HeaderProps {
   currentTab: string;
@@ -14,51 +20,65 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
-  const { 
-    theme, 
-    toggleTheme, 
-    currentUser, 
-    logout, 
-    notifications, 
-    markNotificationRead, 
+  const {
+    theme,
+    toggleTheme,
+    currentUser,
+    logout,
+    notifications,
+    markNotificationRead,
     clearNotifications,
     setCommandPaletteOpen,
     isDemoModeActive,
     triggerJudgeDemoMode,
-    resetToBaseline
+    resetToBaseline,
   } = useApp();
 
   const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   // Unread count
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const getBreadcrumbTitle = (tab: string) => {
     switch (tab) {
-      case 'dashboard': return 'Command Board';
-      case 'vendors': return 'Vendor Registry';
-      case 'rfqs': return 'Requests for Proposal (RFQs)';
-      case 'comparison': return 'Bid Evaluation Matrix';
-      case 'approvals': return 'Management Sign-offs';
-      case 'pos': return 'Purchase Orders Registry';
-      case 'invoices': return 'Invoices Ledgers';
-      case 'reports': return 'Procurement Insights';
-      case 'activities': return 'Audit Logs';
-      default: return 'Overview';
+      case "dashboard":
+        return "Command Board";
+      case "vendors":
+        return "Vendor Registry";
+      case "rfqs":
+        return "Requests for Proposal (RFQs)";
+      case "comparison":
+        return "Bid Evaluation Matrix";
+      case "approvals":
+        return "Management Sign-offs";
+      case "pos":
+        return "Purchase Orders Registry";
+      case "invoices":
+        return "Invoices Ledgers";
+      case "reports":
+        return "Procurement Insights";
+      case "activities":
+        return "Audit Logs";
+      default:
+        return "Overview";
     }
   };
 
   const getNotifIcon = (type: string) => {
     switch (type) {
-      case 'success': return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
-      case 'warning': return <AlertCircle className="w-4 h-4 text-amber-500" />;
-      default: return <AlertCircle className="w-4 h-4 text-blue-500" />;
+      case "success":
+        return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
+      case "warning":
+        return <AlertCircle className="w-4 h-4 text-amber-500" />;
+      default:
+        return <AlertCircle className="w-4 h-4 text-blue-500" />;
     }
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full flex items-center justify-between px-6 py-3 border-b select-none backdrop-blur-md
+    <header
+      className="sticky top-0 z-40 w-full flex items-center justify-between px-6 py-3 border-b select-none backdrop-blur-md
       bg-white/80 border-slate-200 text-slate-800 dark:bg-slate-950/80 dark:border-slate-800 dark:text-slate-100"
     >
       {/* Search & Breadcrumbs */}
@@ -73,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
         </div>
 
         {/* Global Search trigger styled nicely */}
-        <button 
+        <button
           onClick={() => setCommandPaletteOpen(true)}
           className="hidden md:flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-lg border text-left text-xs text-slate-400 transition-colors
             bg-slate-100/80 border-slate-200 hover:bg-slate-205 dark:bg-slate-900/60 dark:border-slate-800 dark:hover:bg-slate-900"
@@ -94,7 +114,7 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
             <button
               onClick={() => {
                 triggerJudgeDemoMode();
-                onNavigate('dashboard');
+                onNavigate("dashboard");
               }}
               className="px-3 py-1.5 bg-gradient-to-r from-amber-500 via-orange-550 to-red-550 hover:from-amber-600 hover:to-red-650 text-white text-[10px] font-black tracking-wider uppercase rounded-lg shadow-md shadow-orange-500/10 flex items-center gap-1 transition-all hover:scale-[1.03] active:scale-[0.97] cursor-pointer animate-pulse border border-orange-400/20"
               title="Click to instantly seed pristine enterprise Cisco datasets for live judging showcase!"
@@ -117,7 +137,7 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
               <button
                 onClick={() => {
                   resetToBaseline();
-                  onNavigate('dashboard');
+                  onNavigate("dashboard");
                 }}
                 className="text-[9px] font-mono leading-none font-bold text-slate-400 hover:text-red-400 border border-slate-705/30 hover:border-red-400/25 px-1 py-0.5 rounded transition-all cursor-pointer bg-slate-900/10 dark:bg-slate-900/40"
                 title="Restore default sandbox state"
@@ -129,18 +149,26 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
         </div>
 
         {/* Sunrise/Sunset Theme Selector */}
-        <button 
+        <button
           onClick={toggleTheme}
           className="p-2 rounded-lg border text-slate-505 hover:text-slate-800 dark:hover:text-slate-200 transition-all 
             bg-slate-100 border-slate-200 dark:bg-slate-900 dark:border-slate-800 hover:scale-[1.04]"
-          title={theme === 'dark' ? 'Switch to Light Vision' : 'Switch to Dark Vision'}
+          title={
+            theme === "dark"
+              ? "Switch to Light Vision"
+              : "Switch to Dark Vision"
+          }
         >
-          {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400 animate-spin-pulse" /> : <Moon className="w-4 h-4 text-emerald-700" />}
+          {theme === "dark" ? (
+            <Sun className="w-4 h-4 text-amber-400 animate-spin-pulse" />
+          ) : (
+            <Moon className="w-4 h-4 text-emerald-700" />
+          )}
         </button>
 
         {/* Notifications Center */}
         <div className="relative">
-          <button 
+          <button
             onClick={() => {
               setNotifDropdownOpen(!notifDropdownOpen);
               setProfileDropdownOpen(false);
@@ -158,13 +186,16 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
           </button>
 
           {notifDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-80 rounded-xl border shadow-2xl overflow-hidden
+            <div
+              className="absolute right-0 mt-2 w-80 rounded-xl border shadow-2xl overflow-hidden
               bg-white border-slate-200 dark:bg-slate-900 dark:border-slate-800"
             >
               <div className="flex items-center justify-between px-4 py-2 bg-slate-500/5 border-b border-slate-202 dark:border-slate-800">
-                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 font-display uppercase tracking-wider">SYSTEM NOTIFICATIONS</span>
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 font-display uppercase tracking-wider">
+                  SYSTEM NOTIFICATIONS
+                </span>
                 {unreadCount > 0 && (
-                  <button 
+                  <button
                     onClick={clearNotifications}
                     className="text-[10px] font-mono text-emerald-500 hover:underline"
                   >
@@ -178,18 +209,24 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
                     No active notifications.
                   </div>
                 ) : (
-                  notifications.map(notif => (
-                    <div 
+                  notifications.map((notif) => (
+                    <div
                       key={notif.id}
                       onClick={() => markNotificationRead(notif.id)}
                       className={`p-3 text-left transition-colors cursor-pointer flex items-start gap-2.5 
-                        ${notif.read ? 'opacity-65 hover:opacity-100' : 'bg-emerald-500/[0.03] hover:bg-emerald-500/[0.08]'}`}
+                        ${notif.read ? "opacity-65 hover:opacity-100" : "bg-emerald-500/[0.03] hover:bg-emerald-500/[0.08]"}`}
                     >
                       <div className="mt-0.5">{getNotifIcon(notif.type)}</div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-xs font-bold truncate text-slate-800 dark:text-slate-200">{notif.title}</div>
-                        <div className="text-[11px] text-slate-500 font-sans leading-relaxed">{notif.message}</div>
-                        <div className="text-[9px] font-mono mt-1 text-slate-400">{new Date(notif.createdAt).toLocaleTimeString()}</div>
+                        <div className="text-xs font-bold truncate text-slate-800 dark:text-slate-200">
+                          {notif.title}
+                        </div>
+                        <div className="text-[11px] text-slate-500 font-sans leading-relaxed">
+                          {notif.message}
+                        </div>
+                        <div className="text-[9px] font-mono mt-1 text-slate-400">
+                          {new Date(notif.createdAt).toLocaleTimeString()}
+                        </div>
                       </div>
                     </div>
                   ))
@@ -201,7 +238,7 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
 
         {/* Profiles Dropdown */}
         <div className="relative">
-          <button 
+          <button
             onClick={() => {
               setProfileDropdownOpen(!profileDropdownOpen);
               setNotifDropdownOpen(false);
@@ -210,7 +247,8 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
               bg-slate-100/80 border-slate-200 dark:bg-slate-900/80 dark:border-slate-800"
           >
             <div className="w-7 h-7 rounded-md bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white text-xs font-bold font-sans uppercase">
-              {currentUser.firstName[0]}{currentUser.lastName[0]}
+              {currentUser.firstName[0]}
+              {currentUser.lastName[0]}
             </div>
             <div className="hidden sm:block text-xs mr-2">
               <div className="font-semibold text-slate-700 dark:text-slate-200 leading-tight">
@@ -224,18 +262,23 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
           </button>
 
           {profileDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-xl border shadow-2xl py-1 overflow-hidden
+            <div
+              className="absolute right-0 mt-2 w-56 rounded-xl border shadow-2xl py-1 overflow-hidden
               bg-white border-slate-200 dark:bg-slate-900 dark:border-slate-800"
             >
               <div className="px-3 py-2 border-b border-slate-105 dark:border-slate-800">
-                <div className="text-xs font-bold text-slate-705 dark:text-slate-202">{currentUser.firstName} {currentUser.lastName}</div>
-                <div className="text-[10px] text-slate-400 font-mono translate-y-0.5 truncate">{currentUser.email}</div>
+                <div className="text-xs font-bold text-slate-705 dark:text-slate-202">
+                  {currentUser.firstName} {currentUser.lastName}
+                </div>
+                <div className="text-[10px] text-slate-400 font-mono translate-y-0.5 truncate">
+                  {currentUser.email}
+                </div>
               </div>
-              
-              <button 
+
+              <button
                 onClick={() => {
                   setProfileDropdownOpen(false);
-                  onNavigate('profile');
+                  onNavigate("profile");
                 }}
                 className="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs text-left text-slate-700 dark:text-slate-350 hover:bg-slate-500/5 cursor-pointer border-b dark:border-slate-800"
               >
@@ -243,7 +286,7 @@ export const Header: React.FC<HeaderProps> = ({ currentTab, onNavigate }) => {
                 <span>Profile Settings</span>
               </button>
 
-              <button 
+              <button
                 onClick={() => {
                   setProfileDropdownOpen(false);
                   logout();

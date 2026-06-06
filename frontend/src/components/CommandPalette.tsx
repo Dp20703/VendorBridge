@@ -1,35 +1,47 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React, { useState, useEffect, useRef } from 'react';
-import { useApp } from '../context/AppContext';
-import { Search, FolderOpen, Shield, Clipboard, FileText, UserPlus, FileCheck } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { formatCurrency } from '../utils/currency';
+import React, { useState, useEffect, useRef } from "react";
+import { useApp } from "../context/AppContext";
+import {
+  Search,
+  FolderOpen,
+  Shield,
+  Clipboard,
+  FileText,
+  UserPlus,
+  FileCheck,
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { formatCurrency } from "../utils/currency";
 
 interface CommandPaletteProps {
   onNavigate: (tab: string) => void;
 }
 
-export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) => {
-  const { commandPaletteOpen, setCommandPaletteOpen, rfqs, vendors, purchaseOrders, invoices } = useApp();
-  const [query, setQuery] = useState('');
+export const CommandPalette: React.FC<CommandPaletteProps> = ({
+  onNavigate,
+}) => {
+  const {
+    commandPaletteOpen,
+    setCommandPaletteOpen,
+    rfqs,
+    vendors,
+    purchaseOrders,
+    invoices,
+  } = useApp();
+  const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
         e.preventDefault();
         setCommandPaletteOpen(!commandPaletteOpen);
       }
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setCommandPaletteOpen(false);
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [commandPaletteOpen, setCommandPaletteOpen]);
 
   useEffect(() => {
@@ -38,7 +50,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
         inputRef.current?.focus();
       }, 50);
     } else {
-      setQuery('');
+      setQuery("");
     }
   }, [commandPaletteOpen]);
 
@@ -49,115 +61,168 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
     id: string;
     title: string;
     subtitle: string;
-    type: 'rfq' | 'vendor' | 'po' | 'invoice' | 'action';
+    type: "rfq" | "vendor" | "po" | "invoice" | "action";
     action: () => void;
   }[] = [];
 
   // Actions search
   const actions = [
-    { title: 'Go to Procurement Dashboard', subtitle: 'Global ERP analytics', type: 'action' as const, dest: 'dashboard' },
-    { title: 'Register New Vendor Partner', subtitle: 'Configure vendor profile', type: 'action' as const, dest: 'vendors' },
-    { title: 'Create Draft RFP / Request for Quotation', subtitle: 'Add multiple lines specifications', type: 'action' as const, dest: 'rfqs' },
-    { title: 'Compare Vendor Bids', subtitle: 'Wow-factor side-by-side matrices', type: 'action' as const, dest: 'comparison' },
-    { title: 'Pending Approval Workflows', subtitle: 'Sign-off and PO dispatch', type: 'action' as const, dest: 'approvals' },
-    { title: 'Generate Reports and Logs', subtitle: 'Audit trial analytics', type: 'action' as const, dest: 'reports' },
+    {
+      title: "Go to Procurement Dashboard",
+      subtitle: "Global ERP analytics",
+      type: "action" as const,
+      dest: "dashboard",
+    },
+    {
+      title: "Register New Vendor Partner",
+      subtitle: "Configure vendor profile",
+      type: "action" as const,
+      dest: "vendors",
+    },
+    {
+      title: "Create Draft RFP / Request for Quotation",
+      subtitle: "Add multiple lines specifications",
+      type: "action" as const,
+      dest: "rfqs",
+    },
+    {
+      title: "Compare Vendor Bids",
+      subtitle: "Wow-factor side-by-side matrices",
+      type: "action" as const,
+      dest: "comparison",
+    },
+    {
+      title: "Pending Approval Workflows",
+      subtitle: "Sign-off and PO dispatch",
+      type: "action" as const,
+      dest: "approvals",
+    },
+    {
+      title: "Generate Reports and Logs",
+      subtitle: "Audit trial analytics",
+      type: "action" as const,
+      dest: "reports",
+    },
   ];
 
-  actions.forEach(act => {
-    if (act.title.toLowerCase().includes(query.toLowerCase()) || act.subtitle.toLowerCase().includes(query.toLowerCase())) {
+  actions.forEach((act) => {
+    if (
+      act.title.toLowerCase().includes(query.toLowerCase()) ||
+      act.subtitle.toLowerCase().includes(query.toLowerCase())
+    ) {
       searchResults.push({
         id: `act-${act.dest}`,
         title: act.title,
         subtitle: act.subtitle,
-        type: 'action',
+        type: "action",
         action: () => {
           onNavigate(act.dest);
           setCommandPaletteOpen(false);
-        }
+        },
       });
     }
   });
 
   // RFQ search
-  rfqs.forEach(r => {
-    if (r.title.toLowerCase().includes(query.toLowerCase()) || r.id.toLowerCase().includes(query.toLowerCase())) {
+  rfqs.forEach((r) => {
+    if (
+      r.title.toLowerCase().includes(query.toLowerCase()) ||
+      r.id.toLowerCase().includes(query.toLowerCase())
+    ) {
       searchResults.push({
         id: r.id,
         title: r.title,
         subtitle: `Status: ${r.status}  •  Category: ${r.category}`,
-        type: 'rfq',
+        type: "rfq",
         action: () => {
-          onNavigate('rfqs');
+          onNavigate("rfqs");
           setCommandPaletteOpen(false);
-        }
+        },
       });
     }
   });
 
   // Vendors search
-  vendors.forEach(v => {
-    if (v.companyName.toLowerCase().includes(query.toLowerCase()) || v.name.toLowerCase().includes(query.toLowerCase())) {
+  vendors.forEach((v) => {
+    if (
+      v.companyName.toLowerCase().includes(query.toLowerCase()) ||
+      v.name.toLowerCase().includes(query.toLowerCase())
+    ) {
       searchResults.push({
         id: v.id,
         title: v.companyName,
         subtitle: `Representative: ${v.name}  •   Category: ${v.category}  •  Rating: ${v.rating}★`,
-        type: 'vendor',
+        type: "vendor",
         action: () => {
-          onNavigate('vendors');
+          onNavigate("vendors");
           setCommandPaletteOpen(false);
-        }
+        },
       });
     }
   });
 
   // Purchase Order search
-  purchaseOrders.forEach(po => {
-    if (po.poNumber.toLowerCase().includes(query.toLowerCase()) || po.vendorName.toLowerCase().includes(query.toLowerCase())) {
+  purchaseOrders.forEach((po) => {
+    if (
+      po.poNumber.toLowerCase().includes(query.toLowerCase()) ||
+      po.vendorName.toLowerCase().includes(query.toLowerCase())
+    ) {
       searchResults.push({
         id: po.id,
         title: po.poNumber,
         subtitle: `Vendor: ${po.vendorName} • Value: ${formatCurrency(po.totalAmount)} • Status: ${po.status}`,
-        type: 'po',
+        type: "po",
         action: () => {
-          onNavigate('pos');
+          onNavigate("pos");
           setCommandPaletteOpen(false);
-        }
+        },
       });
     }
   });
 
   // Invoice search
-  invoices.forEach(inv => {
-    if (inv.invoiceNumber.toLowerCase().includes(query.toLowerCase()) || inv.vendorName.toLowerCase().includes(query.toLowerCase())) {
+  invoices.forEach((inv) => {
+    if (
+      inv.invoiceNumber.toLowerCase().includes(query.toLowerCase()) ||
+      inv.vendorName.toLowerCase().includes(query.toLowerCase())
+    ) {
       searchResults.push({
         id: inv.id,
         title: inv.invoiceNumber,
         subtitle: `Vendor: ${inv.vendorName} • Due: ${formatCurrency(inv.grandTotal)} • Status: ${inv.status}`,
-        type: 'invoice',
+        type: "invoice",
         action: () => {
-          onNavigate('invoices');
+          onNavigate("invoices");
           setCommandPaletteOpen(false);
-        }
+        },
       });
     }
   });
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'rfq': return <Clipboard className="w-4 h-4 text-emerald-500" />;
-      case 'vendor': return <UserPlus className="w-4 h-4 text-blue-500" />;
-      case 'po': return <FileCheck className="w-4 h-4 text-purple-500" />;
-      case 'invoice': return <FileText className="w-4 h-4 text-amber-500" />;
-      default: return <FolderOpen className="w-4 h-4 text-gray-400" />;
+      case "rfq":
+        return <Clipboard className="w-4 h-4 text-emerald-500" />;
+      case "vendor":
+        return <UserPlus className="w-4 h-4 text-blue-500" />;
+      case "po":
+        return <FileCheck className="w-4 h-4 text-purple-500" />;
+      case "invoice":
+        return <FileText className="w-4 h-4 text-amber-500" />;
+      default:
+        return <FolderOpen className="w-4 h-4 text-gray-400" />;
     }
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4 bg-black/60 backdrop-blur-sm">
       {/* Backdrop closer */}
-      <div className="absolute inset-0" onClick={() => setCommandPaletteOpen(false)} />
+      <div
+        className="absolute inset-0"
+        onClick={() => setCommandPaletteOpen(false)}
+      />
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95, y: -20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: -20 }}
@@ -182,7 +247,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
         <div className="max-h-80 overflow-y-auto px-2 py-3 custom-scrollbar">
           {searchResults.length === 0 ? (
             <div className="py-6 text-center text-sm text-slate-500">
-              No matching enterprise entities found. Try searching for "Steel", "Horizon", or "Dashboard".
+              No matching enterprise entities found. Try searching for "Steel",
+              "Horizon", or "Dashboard".
             </div>
           ) : (
             <div className="space-y-1">
@@ -213,8 +279,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onNavigate }) =>
         </div>
 
         <div className="flex items-center justify-between px-4 py-2 border-t dark:border-slate-800 light:border-slate-200 bg-slate-950/40 text-[10px] font-mono text-slate-500">
-          <span>Use <span className="text-emerald-500">↑↓</span> to select</span>
-          <span>Press <span className="text-emerald-500">Enter</span> to execute</span>
+          <span>
+            Use <span className="text-emerald-500">↑↓</span> to select
+          </span>
+          <span>
+            Press <span className="text-emerald-500">Enter</span> to execute
+          </span>
         </div>
       </motion.div>
     </div>

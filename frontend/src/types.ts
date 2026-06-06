@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 export enum UserRole {
   ADMIN = "ADMIN",
   PROCUREMENT = "PROCUREMENT",
