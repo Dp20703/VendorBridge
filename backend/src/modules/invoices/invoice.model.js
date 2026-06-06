@@ -1,22 +1,65 @@
 import mongoose from "mongoose";
 
-const invoiceSchema = new mongoose.Schema({
-  invoiceNumber: String,
+const invoiceSchema = new mongoose.Schema(
+  {
+    /**
+     * Human Friendly Invoice Number
+     */
+    invoiceNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
 
-  poId: ObjectId,
-  subtotal: Number,
+    /**
+     * Purchase Order Reference
+     */
+    poId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PurchaseOrder",
+      required: true,
+      unique: true,
+    },
 
-  taxAmount: Number,
+    /**
+     * Financial Breakdown
+     */
+    subtotal: {
+      type: Number,
+      required: true,
+    },
 
-  totalAmount: Number,
+    taxAmount: {
+      type: Number,
+      required: true,
+    },
 
-  pdfUrl: String,
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
 
-  status: {
-    type: String,
-    enum: ["GENERATED", "PAID"],
+    /**
+     * PDF URL
+     */
+    pdfUrl: {
+      type: String,
+      default: "",
+    },
+
+    /**
+     * Invoice Status
+     */
+    status: {
+      type: String,
+      enum: ["GENERATED", "PAID"],
+      default: "GENERATED",
+    },
   },
-});
+  {
+    timestamps: true,
+  },
+);
 
 const Invoice = mongoose.model("Invoice", invoiceSchema);
 
