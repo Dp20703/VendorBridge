@@ -1,21 +1,59 @@
 import mongoose from "mongoose";
 
-const quotationSchema = new mongoose.Schema({
-  rfqId: ObjectId,
+const quotationSchema = new mongoose.Schema(
+  {
+    rfqId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Rfq",
+      required: true,
+    },
 
-  vendorId: ObjectId,
+    vendorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vendor",
+      required: true,
+    },
 
-  amount: Number,
+    amount: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
 
-  deliveryDays: Number,
+    deliveryDays: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
 
-  notes: String,
+    notes: {
+      type: String,
+      trim: true,
+    },
 
-  status: {
-    type: String,
-    enum: ["SUBMITTED", "SELECTED", "REJECTED"],
+    status: {
+      type: String,
+      enum: ["SUBMITTED", "SELECTED", "REJECTED"],
+      default: "SUBMITTED",
+    },
   },
-});
+  {
+    timestamps: true,
+  },
+);
+
+/**
+ * One quotation per vendor per RFQ
+ */
+quotationSchema.index(
+  {
+    rfqId: 1,
+    vendorId: 1,
+  },
+  {
+    unique: true,
+  },
+);
 
 const Quotation = mongoose.model("Quotation", quotationSchema);
 
